@@ -18,6 +18,7 @@ class DataTest extends PHPUnit_Framework_TestCase
      */
     public function testGetter($data, $request, $result)
     {
+        echo json_encode($data);
         $d = Data::load($data);
         $this->assertEquals($result, $d->get($request));
 

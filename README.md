@@ -14,7 +14,17 @@ Requires composer and PHP7.0+
 
 Simple usage:
 
+Take this object as example:
+```json
+{
+    "config": {
+        "port": "1234",
+        "url": "testurl.com"
+    }
+}
+```
+Then:
 ```php
-$d = Data::load($mixed);
-$d->get('config.port');
+$d = \Alr\ObjectDotNotation\Data::load($mixed);
+echo $d->get('config.port'); // 1234
 ```
