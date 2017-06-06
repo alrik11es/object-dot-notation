@@ -1,0 +1,14 @@
+{
+  "name": "alrik11es/object-dot-notation",
+  "description": "Object dot notation for PHP with key existence validation",
+  "keywords": ["dot notation", "object"],
+  "license": "MIT",
+  "require-dev": {
+    "phpunit/phpunit": "^5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Alr\\ObjectDotNotation\\": "src/"
+    }
+  }
+}
