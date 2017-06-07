@@ -47,6 +47,7 @@ class Data
                 }
             } else {
                 $value = $this->part;
+                $this->part = false;
             }
         } else {
             if(property_exists($this->data, $first_value)){

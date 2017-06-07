@@ -29,6 +29,8 @@ class DataTest extends PHPUnit_Framework_TestCase
     {
         $d = Data::load($data);
         $this->assertEquals($result, $d->get($request));
+        var_dump($d->get('something.not.existing'));
+        $this->assertNull($d->get('something.not.existing'));
     }
 
 }
