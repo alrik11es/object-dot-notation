@@ -4,7 +4,8 @@ namespace Alr\ObjectDotNotation;
 class Data
 {
     private $data;
-    private $part = false;
+    private $parts;
+    private $result;
 
     /**
      * Load any object or array
@@ -20,7 +21,7 @@ class Data
 
     private function l($mixed)
     {
-        $this->data = json_decode(json_encode($mixed));
+        $this->data = json_decode(json_encode($mixed)); // Obtain a object for the data
     }
 
     /**
@@ -31,33 +32,31 @@ class Data
     public function get($property)
     {
         $value = null;
-        $values = explode('.', $property);
-        $first_value = $values[0];
 
-        if($this->part){
-            if(is_object($this->part) && property_exists($this->part, $first_value)){
-                array_shift($values);
-                $new_prop = implode('.', $values);
-                $this->part = $this->part->$first_value;
-                if(is_object($this->part) || is_array($this->part)){
-                    $value = $this->get($new_prop);
-                } else {
-                    $value = $this->part;
-                    $this->part = false;
-                }
-            } else {
-                $value = $this->part;
-                $this->part = false;
-            }
-        } else {
-            if(property_exists($this->data, $first_value)){
-                array_shift($values);
-                $new_prop = implode('.', $values);
-                $this->part = $this->data->$first_value;
-                $value = $this->get($new_prop);
-            }
+        $this->parseDotNotation($property);
+
+        $this->result = $this->data;
+
+        foreach($this->parts as $part){
+            $this->result = $this->getPart($part);
+            if(is_null($this->result)) break;
         }
 
-        return $value;
+        return $this->result;
+    }
+
+    private function getPart($part)
+    {
+        $result = null;
+        if(is_object($this->result) && property_exists($this->result, $part)) {
+            $result = $this->result->$part;
+        }
+        return $result;
+    }
+
+    private function parseDotNotation($property)
+    {
+        $values = explode('.', $property);
+        $this->parts = $values;
     }
 }

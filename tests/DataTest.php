@@ -19,6 +19,9 @@ class DataTest extends PHPUnit_Framework_TestCase
             [ $array_case, 'collection', [
                 $element, $element
             ]],
+            [(object) ['books'=> ['alien'=>'no','pan'=>'value']], 'notexisting', null],
+            [(object) ['books'=> ['alien'=>'no','pan'=>'value']], 'books.notexisting', null],
+            [null, 'books.notexisting', null],
         ];
     }
 
@@ -27,9 +30,10 @@ class DataTest extends PHPUnit_Framework_TestCase
      */
     public function testGetter($data, $request, $result)
     {
-        $d = Data::load($data);
-        $this->assertEquals($result, $d->get($request));
-        $this->assertNull($d->get('something.not.existing'));
+        $d = Alr\ObjectDotNotation\Data::load($data);
+        $res = $d->get($request);
+        $this->assertEquals($result, $res);
+        $this->assertNull(null, $d->get('fake'));
     }
 
 }
