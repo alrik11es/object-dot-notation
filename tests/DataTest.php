@@ -34,6 +34,7 @@ class DataTest extends PHPUnit_Framework_TestCase
         $res = $d->get($request);
         $this->assertEquals($result, $res);
         $this->assertNull(null, $d->get('fake'));
+        $this->assertEquals($d->$request, $res);
     }
 
 }

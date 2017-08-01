@@ -58,4 +58,6 @@ Then:
 <?php
 $d = \Alr\ObjectDotNotation\Data::load($mixed);
 echo $d->get('config.port'); // 1234
+echo $d->{'config.port'};
+echo $d->config; // ['port'=>1234 ...]
 ```

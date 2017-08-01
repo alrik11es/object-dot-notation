@@ -15,13 +15,13 @@ class Data
     static public function load($mixed)
     {
         $d = new Data();
-        $d->l($mixed);
-        return $d;
+        return $d->l($mixed);
     }
 
     private function l($mixed)
     {
-        $this->data = json_decode(json_encode($mixed)); // Obtain a object for the data
+        $this->data = json_decode(json_encode($mixed)); // Convert dump to object no matter what it is.
+        return $this;
     }
 
     /**
@@ -58,5 +58,10 @@ class Data
     {
         $values = explode('.', $property);
         $this->parts = $values;
+    }
+
+    public function __get($name)
+    {
+        return $this->get($name);
     }
 }
