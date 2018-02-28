@@ -18,6 +18,11 @@ class Data
         return $d->l($mixed);
     }
 
+    /**
+     * Used to load the mixed to object.
+     * @param mixed $mixed
+     * @return $this
+     */
     private function l($mixed)
     {
         $this->data = json_decode(json_encode($mixed)); // Convert dump to object no matter what it is.
@@ -27,7 +32,7 @@ class Data
     /**
      * Obtain a specific property value
      * @param $property
-     * @return bool|null
+     * @return mixed|null
      */
     public function get($property)
     {
@@ -45,6 +50,11 @@ class Data
         return $this->result;
     }
 
+    /**
+     * Obtains a part of the mixed element or null
+     * @param string $part
+     * @return mixed|null
+     */
     private function getPart($part)
     {
         $result = null;
@@ -54,12 +64,22 @@ class Data
         return $result;
     }
 
+    /**
+     * Simple parser for object dot notation element accessor. It will fill the parts property with values.
+     * @param string $property
+     */
     private function parseDotNotation($property)
     {
         $values = explode('.', $property);
         $this->parts = $values;
     }
 
+    /**
+     * This will allow you to get data like $d->{'config.port'}; or $d->config;
+     * passing all the respective checks.
+     * @param $name
+     * @return mixed|null
+     */
     public function __get($name)
     {
         return $this->get($name);
