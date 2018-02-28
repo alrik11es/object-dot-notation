@@ -1,4 +1,4 @@
-![alt tag](https://raw.githubusercontent.com/alrik11es/object-dot-notation/master/dot-libary.png)
+![alt tag](https://raw.githubusercontent.com/alrik11es/object-dot-notation/master/dot-library.png)
 
 ![Status](https://travis-ci.org/alrik11es/object-dot-notation.svg?branch=master)
 
