@@ -1,4 +1,4 @@
-![alt tag](https://raw.githubusercontent.com/alrik11es/object-dot-notation/master/dot-library.png) [![Build Status](https://travis-ci.org/alrik11es/object-dot-notation.svg?branch=master)](https://travis-ci.org/alrik11es/object-dot-notation)
+![alt tag](https://raw.githubusercontent.com/alrik11es/object-dot-notation/master/dot-library.png)
 
     The idea behind this library is to allow the access through
     `config.port` dot notation to object data.

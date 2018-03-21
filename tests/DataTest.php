@@ -37,4 +37,60 @@ class DataTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($d->$request, $res);
     }
 
+
+    public function changedBehaviourDataProvider()
+    {
+        $element = new stdClass();
+        $array_case = new stdClass();
+        $array_case->collection = [
+            $element, $element
+        ];
+
+        return [
+            [['two'=>['three'=>'value']], 'two.three', false],
+        ];
+    }
+
+    /**
+     * @dataProvider changedBehaviourDataProvider
+     */
+    public function testGetterChangedBehaviour($data, $request, $result)
+    {
+        $d = Alr\ObjectDotNotation\Data::load($data);
+        $res = $d->get($request, function($value){
+            if($value == 'value'){
+                return false;
+            }
+        });
+        $this->assertEquals($result, $res);
+    }
+
+    public function changedGlobalBehaviourDataProvider()
+    {
+        $element = new stdClass();
+        $array_case = new stdClass();
+        $array_case->collection = [
+            $element, $element
+        ];
+
+        return [
+            [['two'=>['three'=>'value']], 'two.three', false],
+        ];
+    }
+
+    /**
+     * @dataProvider changedGlobalBehaviourDataProvider
+     */
+    public function testGetterChangedGlobalBehaviour($data, $request, $result)
+    {
+        $d = Alr\ObjectDotNotation\Data::load($data);
+        $d->setValidation(function($value){
+            if($value == 'value'){
+                return false;
+            }
+        });
+        $res = $d->get($request);
+        $this->assertEquals($result, $res);
+    }
+
 }

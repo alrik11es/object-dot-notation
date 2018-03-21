@@ -6,6 +6,7 @@ class Data
     private $data;
     private $parts;
     private $result;
+    private $validation;
 
     /**
      * Load any object or array
@@ -34,8 +35,9 @@ class Data
      * @param $property
      * @return mixed|null
      */
-    public function get($property)
+    public function get($property, callable $validation = null)
     {
+        if($validation) $this->validation = $validation;
         $value = null;
 
         $this->parseDotNotation($property);
@@ -47,7 +49,17 @@ class Data
             if(is_null($this->result)) break;
         }
 
-        return $this->result;
+        if($this->validation) {
+            $result = ($this->validation)($this->result);
+        } else {
+            $result = $this->result;
+        }
+        return $result;
+    }
+
+    public function setValidation(callable $validation)
+    {
+        $this->validation = $validation;
     }
 
     /**
