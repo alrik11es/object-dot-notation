@@ -33,6 +33,10 @@ $d = \Alr\ObjectDotNotation\Data::load(r());
 $whatiwant = $d->get('hits.products');
 ```
 
+## Demo
+
+[You can try a demo here](http://demo.dotnotation.net)
+
 ## Installation
 
 Requires composer and PHP7.0+

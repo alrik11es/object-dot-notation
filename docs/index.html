@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PHP Object Dot Notation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <script src="http://cdn.jsdelivr.net/vue/1.0.16/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<section class="section">
+    <div class="container">
+        <h1 class="title">
+            PHP Object Dot Notation
+        </h1>
+        <p class="subtitle">
+            This is a demo for PHP Object Dot Notation library
+        </p>
+    </div>
+</section>
+
+<div class="container" id="vue-instance">
+
+
+    <div class="field">
+        <label class="label">Message</label>
+        <div class="control">
+            <textarea class="textarea" placeholder="Textarea" @keyup="resizeTextarea()" v-model="jsondata">
+{
+    "hits":{
+        "products": [
+            {
+                "name": "Shoe"
+            }
+        ]
+    }
+}
+            </textarea>
+        </div>
+    </div>
+
+
+    <div class="field">
+        <label class="label">Name</label>
+        <div class="control">
+            <input class="input" type="text" placeholder="hits.products" v-model="field">
+        </div>
+    </div>
+
+    <pre v-html="result">{{ result }}</pre>
+
+    <br/>
+
+    <div class="notification">
+        View this library on <a href="https://github.com/alrik11es/object-dot-notation">github</a>.
+    </div>
+</div>
+
+<script>
+    // our VueJs instance bound to the div with an id of vue-instance
+    var vm = new Vue({
+        el: '#vue-instance',
+        watch: {
+            field: function(val) {
+                this.getResponse(val);
+            }
+        },
+        data: {
+            result: 'Waiting result...',
+            field: null,
+            jsondata: null
+        },
+        created: function() {
+            var self = this;
+            window.addEventListener('load', function(){
+                console.log(self);
+                self.resizeTextarea();
+            });
+        },
+        methods: {
+            getResponse: function(val) {
+                var self = this;
+                axios.post('http://demo.dotnotation.net/object-dot-notation/docs/demo.php', {
+                    data: this.jsondata,
+                    field: val
+                }).then(function (response) {
+                    self.result = response.data.html;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            resizeTextarea: function(){
+                var a = document.querySelector('textarea');
+                a.style.height = 'auto';
+                a.style.height = a.scrollHeight+'px';
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
