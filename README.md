@@ -1,3 +1,9 @@
+# Project deprecated
+In PHP7 you can just use  `$var = $something ?? $something2;`
+I will still maintain support for PHP5
+
+-----
+
 ![alt tag](https://raw.githubusercontent.com/alrik11es/object-dot-notation/master/dot-library.png) [![Build Status](https://travis-ci.org/alrik11es/object-dot-notation.svg?branch=master)](https://travis-ci.org/alrik11es/object-dot-notation)
 
     The idea behind this library is to allow the access through
