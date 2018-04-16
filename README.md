@@ -45,7 +45,7 @@ $whatiwant = $d->get('hits.products');
 
 ## Installation
 
-Requires composer and PHP7.0+
+Requires composer and PHP5.6+
 
 > $ composer require alrik11es/object-dot-notation
 
