@@ -50,7 +50,7 @@ class Data
         }
 
         if($this->validation) {
-            $result = ($this->validation)($this->result);
+            $result = call_user_func($this->validation, $this->result);
         } else {
             $result = $this->result;
         }
