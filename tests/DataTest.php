@@ -1,4 +1,5 @@
 <?php
+
 use Alr\ObjectDotNotation\Data;
 
 class DataTest extends PHPUnit_Framework_TestCase
@@ -13,14 +14,14 @@ class DataTest extends PHPUnit_Framework_TestCase
         ];
 
         return [
-            [['two'=>['three'=>'value']], 'two.three', 'value'],
-            [['books'=>['alien'=>'no','pan'=>'value']], 'books.alien', 'no'],
-            [(object) ['books'=> ['alien'=>'no','pan'=>'value']], 'books.alien', 'no'],
-            [ $array_case, 'collection', [
+            [['two' => ['three' => 'value']], 'two.three', 'value'],
+            [['books' => ['alien' => 'no', 'pan' => 'value']], 'books.alien', 'no'],
+            [(object)['books' => ['alien' => 'no', 'pan' => 'value']], 'books.alien', 'no'],
+            [$array_case, 'collection', [
                 $element, $element
             ]],
-            [(object) ['books'=> ['alien'=>'no','pan'=>'value']], 'notexisting', null],
-            [(object) ['books'=> ['alien'=>'no','pan'=>'value']], 'books.notexisting', null],
+            [(object)['books' => ['alien' => 'no', 'pan' => 'value']], 'notexisting', null],
+            [(object)['books' => ['alien' => 'no', 'pan' => 'value']], 'books.notexisting', null],
             [null, 'books.notexisting', null],
         ];
     }

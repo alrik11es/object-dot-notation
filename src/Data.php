@@ -1,4 +1,5 @@
 <?php
+
 namespace Alr\ObjectDotNotation;
 
 class Data
@@ -37,19 +38,19 @@ class Data
      */
     public function get($property, callable $validation = null)
     {
-        if($validation) $this->validation = $validation;
+        if ($validation) $this->validation = $validation;
         $value = null;
 
         $this->parseDotNotation($property);
 
         $this->result = $this->data;
 
-        foreach($this->parts as $part){
+        foreach ($this->parts as $part) {
             $this->result = $this->getPart($part);
-            if(is_null($this->result)) break;
+            if (is_null($this->result)) break;
         }
 
-        if($this->validation) {
+        if ($this->validation) {
             $result = call_user_func($this->validation, $this->result);
         } else {
             $result = $this->result;
@@ -74,10 +75,10 @@ class Data
         $array_part = preg_replace('/.*\[(.*)\]/', '$1', $part);
         $part = preg_replace('/\[.*\]/', '', $part);
 
-        if(is_object($this->result) && property_exists($this->result, $part)) {
-            if(preg_match('/\=/', $array_part)) {
+        if (is_object($this->result) && property_exists($this->result, $part)) {
+            if (preg_match('/\=/', $array_part)) {
                 list($name, $value) = explode('=', $array_part);
-                foreach($this->result->$part as $key => $item) {
+                foreach ($this->result->$part as $key => $item) {
                     $d = self::load($item);
                     if ($d->get($name) == $value) {
                         $result = $item;
@@ -85,7 +86,7 @@ class Data
                     }
                 }
             } elseif ($array_part != $part && is_array($this->result->$part)) {
-                if(ctype_digit($array_part)) {
+                if (ctype_digit($array_part)) {
                     $result = $this->result->$part[$array_part];
                 }
             } else {
@@ -93,13 +94,6 @@ class Data
             }
         }
         return $result;
-    }
-
-    private function checkForArray($part)
-    {
-        if (preg_match('/\[.*\]/', $part)) {
-
-        }
     }
 
     /**
