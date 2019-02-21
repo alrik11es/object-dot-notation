@@ -65,15 +65,35 @@ echo $d->get('config.port'); // 1234
 echo $d->{'config.port'};
 echo $d->config; // ['port'=>1234 ...]
 ```
-### Change validation behaviour
+### Array and array search
 
-The default validation for every sub-request checks if is object and has any properties.
+For other kind of uses you're gonna need to get a position of an array or search
+and get the first value of array.
 
-You can change the last row validation behaviour to check for specific result value. Like strings or whatever.
-
+Take this object as example:
+```json
+{
+    "config": [{
+        "port": "80",
+        "url": "aurl.com"
+    },{
+        "port": "90",
+        "url": "burl.com"
+    }]
+}
+```
+You can use this way to access the information:
 ```php
 <?php
-$d->setValidation(function($data){
-      return is_object($data);
-  });
+$d = \Alr\ObjectDotNotation\Data::load($mixed);
+echo $d->get('config[0].port'); // 80
+echo $d->{'config[port=90|first].url'}; // burl.com
 ```
+
+### Filters
+You can use filters for the array selection process.
+
+`[port=90|first]`
+
+#### Advanced filters
+***TODO***

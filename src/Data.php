@@ -73,6 +73,9 @@ class Data
         $result = null;
 
         $array_part = preg_replace('/.*\[(.*)\]/', '$1', $part);
+        $filters = explode('|',$array_part);
+        $array_part = $filters[0]; // Temporary fix for future filters, now only first row will be returned
+
         $part = preg_replace('/\[.*\]/', '', $part);
 
         if (is_object($this->result) && property_exists($this->result, $part)) {
