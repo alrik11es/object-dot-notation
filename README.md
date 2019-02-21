@@ -95,5 +95,7 @@ You can use filters for the array selection process.
 
 `[port=90|first]`
 
+> IMPORTANT NOTE: Actually you can only use `|first` filter, use it always because it's going to be needed on future versions to avoid compatibility problems.
+
 #### Advanced filters
 ***TODO***
