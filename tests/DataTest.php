@@ -37,58 +37,31 @@ class DataTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($d->$request, $res);
     }
 
-
-    public function changedBehaviourDataProvider()
+    public function arrayCaseDataProvider()
     {
         $element = new stdClass();
-        $array_case = new stdClass();
-        $array_case->collection = [
-            $element, $element
+
+        $a = new stdClass();
+        $a->name = 'bob';
+        $b = (new stdClass());
+        $b->name = 'perkins';
+        $element->people = [
+            $a,
+            $b
         ];
 
         return [
-            [['two'=>['three'=>'value']], 'two.three', false],
+            [$element, 'people[0].name', 'bob'],
+            [$element, 'people[name=bob].name', 'bob'],
         ];
     }
 
     /**
-     * @dataProvider changedBehaviourDataProvider
+     * @dataProvider arrayCaseDataProvider
      */
-    public function testGetterChangedBehaviour($data, $request, $result)
+    public function testArrayCase($data, $request, $result)
     {
         $d = Alr\ObjectDotNotation\Data::load($data);
-        $res = $d->get($request, function($value){
-            if($value == 'value'){
-                return false;
-            }
-        });
-        $this->assertEquals($result, $res);
-    }
-
-    public function changedGlobalBehaviourDataProvider()
-    {
-        $element = new stdClass();
-        $array_case = new stdClass();
-        $array_case->collection = [
-            $element, $element
-        ];
-
-        return [
-            [['two'=>['three'=>'value']], 'two.three', false],
-        ];
-    }
-
-    /**
-     * @dataProvider changedGlobalBehaviourDataProvider
-     */
-    public function testGetterChangedGlobalBehaviour($data, $request, $result)
-    {
-        $d = Alr\ObjectDotNotation\Data::load($data);
-        $d->setValidation(function($value){
-            if($value == 'value'){
-                return false;
-            }
-        });
         $res = $d->get($request);
         $this->assertEquals($result, $res);
     }

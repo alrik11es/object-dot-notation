@@ -70,10 +70,36 @@ class Data
     private function getPart($part)
     {
         $result = null;
+
+        $array_part = preg_replace('/.*\[(.*)\]/', '$1', $part);
+        $part = preg_replace('/\[.*\]/', '', $part);
+
         if(is_object($this->result) && property_exists($this->result, $part)) {
-            $result = $this->result->$part;
+            if(preg_match('/\=/', $array_part)) {
+                list($name, $value) = explode('=', $array_part);
+                foreach($this->result->$part as $key => $item) {
+                    $d = self::load($item);
+                    if ($d->get($name) == $value) {
+                        $result = $item;
+                        break;
+                    }
+                }
+            } elseif ($array_part != $part && is_array($this->result->$part)) {
+                if(ctype_digit($array_part)) {
+                    $result = $this->result->$part[$array_part];
+                }
+            } else {
+                $result = $this->result->$part;
+            }
         }
         return $result;
+    }
+
+    private function checkForArray($part)
+    {
+        if (preg_match('/\[.*\]/', $part)) {
+
+        }
     }
 
     /**
