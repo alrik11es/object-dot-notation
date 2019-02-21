@@ -90,8 +90,8 @@ class Data
                 }
             } elseif ($array_part != $part && is_array($this->result->$part)) {
                 if (ctype_digit($array_part)) {
-                    $selector = $part[$array_part]; // 5.6 compatibility issue
-                    $result = $this->result->$selector;
+                    $array = $this->result->$part; // 5.6 compatibility issue
+                    $result = $array[$array_part];
                 }
             } else {
                 $result = $this->result->$part;
